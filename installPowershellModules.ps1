@@ -21,6 +21,8 @@ if ($IsLinux) {
 	$username = whoami
 	$baseModuleDirectory = "/home/${username}/.local/share/powershell/Modules/PruneLocal";
 	
+	Write-Output "Creating PruneLocal powershell module in ${baseModuleDirectory}"
+	
 	# Create powershell module directory for user
 	if (!(Test-Path -Path $baseModuleDirectory)) { 
 		New-Item -Type Directory -Path $baseModuleDirectory 
@@ -40,7 +42,8 @@ if ($IsLinux) {
 		$file = Get-Content "${HOME}/.bashrc"
 		$containsWord = $file | %{$_ -match ".devrc"}
 		if(!($containsWord -contains $true)) {
-			echo "`r`n# Source the devrc setup if available" >> "${HOME}/.bashrc"
+			Write-Output "Updating .bashrc file to source new ~/.devrc where powershell aliases are defined"
+			echo "# Source the devrc setup if available" >> "${HOME}/.bashrc"
 			echo "if [ -f ~/.devrc ]; then" >> "${HOME}/.bashrc"
 			echo "   . ~/.devrc" >> "${HOME}/.bashrc"
 			echo "fi" >> "${HOME}/.bashrc"
