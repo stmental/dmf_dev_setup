@@ -6,7 +6,7 @@ if ($IsWindows) {
 	if ($env:PSModulePath -eq $null) {
 		Write-Output "Powershell does not appear to be installed.  Stopping."
 	}else {
-		$psPath = "C:\Users\$($env:UserName)\Documents\PowerShell\Modules"
+		$psPath = "$($env:UserProfile)\Documents\PowerShell\Modules"
 		if (!($env:PSModulePath -split ';' -contains $psPath)) {
 			Write-Output "PSModulePath does not contain ${psPath}.  Stopping."
 		}else {
