@@ -43,10 +43,12 @@ if ($IsLinux) {
 		$containsWord = $file | %{$_ -match ".devrc"}
 		if(!($containsWord -contains $true)) {
 			Write-Output "Updating .bashrc file to source new ~/.devrc where powershell aliases are defined"
+			Write-Output "prunelocal and prunelocalhard aliases should now be available"
 			echo "# Source the devrc setup if available" >> "${HOME}/.bashrc"
 			echo "if [ -f ~/.devrc ]; then" >> "${HOME}/.bashrc"
 			echo "   . ~/.devrc" >> "${HOME}/.bashrc"
 			echo "fi" >> "${HOME}/.bashrc"
+			source "${HOME}/.bashrc"
 		}
 	}
 	
