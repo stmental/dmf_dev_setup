@@ -40,8 +40,9 @@ if ($IsLinux) {
 		$file = Get-Content "${HOME}/.bashrc"
 		$containsWord = $file | %{$_ -match ".devrc"}
 		if(!($containsWord -contains $true)) {
+			echo "`r`n# Source the devrc setup if available" >> "${HOME}/.bashrc"
 			echo "if [ -f ~/.devrc ]; then" >> "${HOME}/.bashrc"
-			echo ". ~/.devrc" >> "${HOME}/.bashrc"
+			echo "   . ~/.devrc" >> "${HOME}/.bashrc"
 			echo "fi" >> "${HOME}/.bashrc"
 		}
 	}
