@@ -1,7 +1,8 @@
+# Copies a PruneLocal powershell module to the current users PowerShell directory
+# which should make it available automatically to use in powershell (part of the PSModulePath env variable path)
 
 if ($IsWindows) {
-	# Copies a PruneLocal powershell module to the current users PowerShell directory
-	# which should make it available automatically to use in powershell (part of the PSModulePath env variable path)
+
 	
 	$baseModuleDirectory = "C:\Users\$($env:UserName)\Documents\PowerShell\Modules\PruneLocal"
 
@@ -10,10 +11,8 @@ if ($IsWindows) {
 		New-Item -Type Directory -Path $baseModuleDirectory 
 	}
 
-	if (Test-Path -Path ".\PruneLocal.psm1" -PathType Leaf){
-		if (!(Test-Path -Path "${baseModuleDirectory}\PruneLocal.psm1" -PathType Leaf)){
-			Copy-Item ".\PruneLocal.psm1" -Destination "${baseModuleDirectory}"
-		}	
+	if (Test-Path -Path ".\PruneLocal.psm1" -PathType Leaf){		
+		Copy-Item ".\PruneLocal.psm1" -Destination "${baseModuleDirectory}"
 	}
 }
 
@@ -28,8 +27,23 @@ if ($IsLinux) {
 	}
 	
 	if (Test-Path -Path "./PruneLocal.psm1" -PathType Leaf){
-		if (!(Test-Path -Path "${baseModuleDirectory}/PruneLocal.psm1" -PathType Leaf)){
-			Copy-Item "./PruneLocal.psm1" -Destination "${baseModuleDirectory}"
-		}	
+		Copy-Item "./PruneLocal.psm1" -Destination "${baseModuleDirectory}"
 	}
+	
+	# Copy the devrc.sh file to the user home directory
+	if (Test-Path -Path "./devrc.sh" -PathType Leaf){
+		Copy-Item "./devrc.sh" -Destination "${HOME}/.devrc"
+	}	
+	
+	# Update .bashrc to include devrc.sh file
+	if (Test-Path -Path "${HOME}/.bashrc" -PathType Leaf){
+		$file = Get-Content "${HOME}/.bashrc"
+		$containsWord = $file | %{$_ -match ".devrc"}
+		if(!($containsWord -contains $true)) {
+			echo "if [ -f ~/.devrc ]; then" >> "${HOME}/.bashrc"
+			echo ". ~/.devrc" >> "${HOME}/.bashrc"
+			echo "fi" >> "${HOME}/.bashrc"
+		}
+	}
+	
 }
