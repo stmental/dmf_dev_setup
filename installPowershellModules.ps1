@@ -48,7 +48,7 @@ if ($IsLinux) {
 			echo "if [ -f ~/.devrc ]; then" >> "${HOME}/.bashrc"
 			echo "   . ~/.devrc" >> "${HOME}/.bashrc"
 			echo "fi" >> "${HOME}/.bashrc"
-			source "${HOME}/.bashrc"
+			. "${HOME}/.bashrc"
 		}
 	}
 	
