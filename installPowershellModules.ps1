@@ -32,7 +32,7 @@ if ($IsLinux) {
 		Write-Output "Powershell does not appear to be installed.  Stopping."
 	}else {
 		$psPath = "/home/${username}/.local/share/powershell/Modules"
-		if (!($env:PSModulePath -split ';' -contains $psPath)) {
+		if (!($env:PSModulePath -split ':' -contains $psPath)) {
 			Write-Output "PSModulePath does not contain ${psPath}.  Stopping."
 		}else {	
 			$baseModuleDirectory = "${psPath}/PruneLocal";
