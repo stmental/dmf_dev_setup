@@ -22,7 +22,6 @@ Function PruneLocalHard {
 # directory for a solution file and launch it, if one is found.
 # Copied from https://github.com/refactorsaurusrex/whats-new
 function Open-Solution {
-  [Alias('sln')]
   param (
     [string]$RootDirectory = $PWD
   )
@@ -40,4 +39,5 @@ function Open-Solution {
   }
 }
 
+New-Alias -Name sln -Value Open-Solution
 Export-ModuleMember -Function * -Alias *
