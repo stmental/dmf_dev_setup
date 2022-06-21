@@ -9,5 +9,6 @@ This is a script that will install the PowerShell module defined in PruneLocal.p
 ## PruneLocal.psm1
 
 This powershell module file contains functions we want automatically available via powershell -
-- PruneLocal
-- PruneLocalHard
+- PruneLocal - automatically delete any local branches that no-longer have a remote branch
+- PruneLocalHard - Same as PruneLocal, except will force delete branches that are unmerged
+- Open-Solution (alias sln) - recursively search your current working directory for a solution file and launch it, if one is found
