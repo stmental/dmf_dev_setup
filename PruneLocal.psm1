@@ -18,6 +18,11 @@ Function PruneLocalHard {
 	git branch -vv | Select-String -Pattern ": gone]" | % { $_.toString().Trim().Split(" ")[0]} | % {git branch -D $_}
 }
 
+# Recursively remove all bin and obj directories from the current
+Function cleanup-objbin {
+	Get-ChildItem .\ -include bin,obj -Recurse | foreach ($_) { remove-item $_.fullname -Force -Recurse }
+}
+
 # Run sln (an alias for Open-Solution) to recursively search your current working 
 # directory for a solution file and launch it, if one is found.
 # Copied from https://github.com/refactorsaurusrex/whats-new
