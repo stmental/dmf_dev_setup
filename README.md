@@ -13,3 +13,4 @@ This powershell module file contains functions we want automatically available v
 - PruneLocalHard - Same as PruneLocal, except will force delete branches that are unmerged
 - Open-Solution (alias sln) - recursively search your current working directory for a solution file and launch it, if one is found
 - cleanup-objbin - recursively remove all bin and obj directories starting in current directory
+- gbash - In Windows, will open a gitbash shell (if GitBash is installed)

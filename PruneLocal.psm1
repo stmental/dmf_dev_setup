@@ -5,6 +5,7 @@
 Function PruneLocal {	
 	$headBranchName =  git remote show origin | Select-String -Pattern "HEAD branch:" | % { $_.toString().Trim().Split(" ")[2]};
 	git checkout $headBranchName;
+  git fetch;
 	git remote prune origin; 
 	git branch -vv | Select-String -Pattern ": gone]" | % { $_.toString().Trim().Split(" ")[0]} | % {git branch -d $_}
 }
@@ -14,6 +15,7 @@ Function PruneLocal {
 Function PruneLocalHard {
 	$headBranchName =  git remote show origin | Select-String -Pattern "HEAD branch:" | % { $_.toString().Trim().Split(" ")[2]};
 	git checkout $headBranchName;
+  git fetch;
 	git remote prune origin; 
 	git branch -vv | Select-String -Pattern ": gone]" | % { $_.toString().Trim().Split(" ")[0]} | % {git branch -D $_}
 }
@@ -21,6 +23,15 @@ Function PruneLocalHard {
 # Recursively remove all bin and obj directories from the current
 Function cleanup-objbin {
 	Get-ChildItem .\ -include bin,obj -Recurse | foreach ($_) { remove-item $_.fullname -Force -Recurse }
+}
+
+# In Windows, will run gitbash shell
+Function gbash {
+  if ($IsWindows -and Test-Path -Path "C:\Program Files\Git\bin\sh.exe" -PathType Leaf){
+    & 'C:\Program Files\Git\bin\sh.exe' --login
+  } else {
+    Write-Output "Error: OS is not Windows or gitbash is not installed in C:\Program Files\Git"
+  }
 }
 
 # Run sln (an alias for Open-Solution) to recursively search your current working 
