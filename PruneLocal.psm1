@@ -27,7 +27,7 @@ Function cleanup-objbin {
 
 # In Windows, will run gitbash shell
 Function gbash {
-  if ($IsWindows -and Test-Path -Path "C:\Program Files\Git\bin\sh.exe" -PathType Leaf){
+  if ($IsWindows -and (Test-Path -Path "C:\Program Files\Git\bin\sh.exe" -PathType Leaf)){
     & 'C:\Program Files\Git\bin\sh.exe' --login
   } else {
     Write-Output "Error: OS is not Windows or gitbash is not installed in C:\Program Files\Git"
